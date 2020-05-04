@@ -1,8 +1,5 @@
 pragma solidity ^0.6.4;
 
-
-
-
 contract Product{
 
     bytes32 name;
@@ -26,19 +23,16 @@ contract Product{
         UUID = bytes32(keccak256(abi.encode(msg.sender, block.timestamp)));
     }
 
-
+    event renewChain(
+        bytes32[] suppliers,
+        bytes32[] times,
+        bytes32[] descriptions
+    );
 
     function addBlock(bytes32 _name, bytes32 _time,bytes32 _description) public {
         supplyBlock newBlock = new supplyBlock(_name, _time, _description);
         supplyChain.push(newBlock);
 
-    }
-
-    function getUUID() public view returns (bytes32){
-        return UUID;
-    }
-
-    function getChain() public view returns(bytes32[] memory, bytes32[] memory, bytes32[] memory){
         bytes32[] memory suppliers;
         bytes32[] memory times;
         bytes32[] memory descriptions;
@@ -49,10 +43,27 @@ contract Product{
             descriptions[i] = supplyChain[i].getDescription();
         }
 
-        return (suppliers,times,descriptions);
-
+        emit renewChain(suppliers, times, descriptions);
     }
 
+    function getUUID() public view returns (bytes32){
+        return UUID;
+    }
+
+    // function getChain() public view returns(bytes32[] memory, bytes32[] memory, bytes32[] memory){
+    //     bytes32[] memory suppliers;
+    //     bytes32[] memory times;
+    //     bytes32[] memory descriptions;
+
+    //     for (uint i = 0; i <= supplyChain.length; i++){
+    //         suppliers[i] = supplyChain[i].getSupplierName();
+    //         times[i] = supplyChain[i].getTime();
+    //         descriptions[i] = supplyChain[i].getDescription();
+    //     }
+
+    //     return (suppliers,times,descriptions);
+
+    // }
 }
 
 contract supplyBlock{
@@ -60,7 +71,6 @@ contract supplyBlock{
     bytes32 supplier_name;//商家登录后，从数据库中直接读取
     bytes32 time;//solidity没法获取当前时间，需要js提供。
     bytes32 description;
-    
 
     constructor(bytes32 _supplier_name, bytes32 _time, bytes32 _description) public{
         require(
