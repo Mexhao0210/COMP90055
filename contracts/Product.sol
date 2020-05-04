@@ -6,18 +6,30 @@ pragma solidity ^0.6.4;
 contract Product{
 
     bytes32 name;
+    bytes32 description;
     supplyBlock[] supplyChain;
     bytes32 UUID;
 
     constructor(bytes32 _name, bytes32 _description) public{
+        require(
+            _name != "",
+            "Please enter a valid name."
+        );
+
+        require(
+            _description != "",
+            "Please enter a valid description."
+        );
+
         name = _name;
-        supplyBlock firstBlock = new supplyBlock(_description);
-        supplyChain.push(firstBlock);
+        description = _description;
         UUID = bytes32(keccak256(abi.encode(msg.sender, block.timestamp)));
     }
 
-    function addBlock(bytes32 _description) public {
-        supplyBlock newBlock = new supplyBlock(_description);
+
+
+    function addBlock(bytes32 _name, bytes32 _time,bytes32 _description) public {
+        supplyBlock newBlock = new supplyBlock(_name, _time, _description);
         supplyChain.push(newBlock);
 
     }
@@ -26,13 +38,13 @@ contract Product{
         return UUID;
     }
 
-    function getChain() public view returns(address[] memory, uint[] memory, bytes32[] memory){
-        address[] memory suppliers;
-        uint[] memory times;
+    function getChain() public view returns(bytes32[] memory, bytes32[] memory, bytes32[] memory){
+        bytes32[] memory suppliers;
+        bytes32[] memory times;
         bytes32[] memory descriptions;
 
         for (uint i = 0; i <= supplyChain.length; i++){
-            suppliers[i] = supplyChain[i].getSupplier();
+            suppliers[i] = supplyChain[i].getSupplierName();
             times[i] = supplyChain[i].getTime();
             descriptions[i] = supplyChain[i].getDescription();
         }
@@ -44,21 +56,43 @@ contract Product{
 }
 
 contract supplyBlock{
-    address supplier;
-    uint time;
+    address supplier_address;
+    bytes32 supplier_name;//商家登录后，从数据库中直接读取
+    bytes32 time;//solidity没法获取当前时间，需要js提供。
     bytes32 description;
+    
 
-    constructor(bytes32 _description) public{
-        supplier = msg.sender;
-        time = block.timestamp;
+    constructor(bytes32 _supplier_name, bytes32 _time, bytes32 _description) public{
+        require(
+            _supplier_name != "",
+            "Please enter a valid supplier name."
+        );
+
+        require(
+            _time != "",
+            "Please enter a valid time."
+        );
+
+        require(
+            _description != "",
+            "Please enter a valid description."
+        );
+
+        supplier_address = msg.sender;
+        supplier_name = _supplier_name;
+        time = _time;
         description = _description;
     }
 
-    function getSupplier() public view returns(address){
-        return supplier;
+    function getSupplierAdd() public view returns(address){
+        return supplier_address;
     }
 
-    function getTime() public view returns(uint){
+    function getSupplierName() public view returns(bytes32){
+        return supplier_name;
+    }
+
+    function getTime() public view returns(bytes32){
         return time;
     }
 
