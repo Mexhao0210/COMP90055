@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Pete's Pet Shop</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="css/login.css"> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">Pete's Pet Shop</h1>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+
+      <button id="loginbt">login</div>
+      <div id="login_mask" class="mask">SSS</div>
+      <div id="loginBox" class="bomb_box">
+        <form name="loginForm" >
+        <div  id="loginFormMain">
+          <table  style="width:468px;height:262px;background-color: gray;text-align: center;">
+             <tr>
+                <th colspan="2" align="center" >login</th>
+             </tr>
+             <tr>
+                 <td>username:<input type="text" style="width: 200px;height: 30px;"  id="username" value=""></td>
+             </tr>
+             <tr>
+                 <td>password:<input type="password"  style="width: 200px;height: 30px;"  id="password" value=""></td>
+             </tr>
+             <tr>
+                 <!-- <td align="center" ><input type="submit" style="cursor: pointer;font-style: inherit;" name="submit" value="login" > 
+                     <input type="reset"  style="cursor: pointer;" name=reset  value="reset"></td> -->
+                  <td><input type="button" id="sub" style="cursor: pointer;font-style: inherit;" value="login!!" onclick="login()"/></td>
+             </tr>
+          </table>
+        </div>
+        </form>
+      </div>
+
+      <div id="petsRow" class="row">
+        <!-- PETS LOAD HERE -->
+      </div>
+    </div>
+
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

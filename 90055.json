@@ -1,0 +1,225 @@
+{
+    "version": 6,
+    "entities": [
+        {
+            "entity": {
+                "type": "Project",
+                "id": "dbcf211b-620c-4aaa-b6f0-e12d358790ac",
+                "name": "90055"
+            },
+            "children": [
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": [
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "username",
+                                        "value": "xx"
+                                    },
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "password",
+                                        "value": "123"
+                                    }
+                                ]
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"data\":{\n    \"id\":\"a5\",\n    \"name\":\"switch\",\n    \"description\":\"out of stock\"\n  }\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/addprod"
+                        },
+                        "id": "7b46f26c-8e72-4db1-bb83-26e7001cbae9",
+                        "name": "addprod.do",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": [
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "username",
+                                        "value": "xx"
+                                    },
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "password",
+                                        "value": "123"
+                                    }
+                                ]
+                            },
+                            "bodyType": "Form",
+                            "textBody": "{\n  \"id\":\"a5\",\n  \"key\":\"sentby\",\n  \"val\":\"mexhao\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": [
+                                    {
+                                        "enabled": true,
+                                        "name": "id",
+                                        "value": "a5"
+                                    }
+                                ]
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "34.66.139.55:8080",
+                            "path": "/getprod"
+                        },
+                        "id": "30700429-b960-430d-85e0-ec48f5dfcf09",
+                        "name": "getprod.do",
+                        "headers": []
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": [
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "username",
+                                        "value": "xx"
+                                    },
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "password",
+                                        "value": "123"
+                                    }
+                                ]
+                            },
+                            "bodyType": "Form",
+                            "textBody": "{\n  \"id\":\"a5\",\n  \"key\":\"sentby\",\n  \"val\":\"mexhao\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "34.66.139.55:8080",
+                            "path": "/login"
+                        },
+                        "id": "8348d6fe-1c95-4169-8dd3-b40f400c4f54",
+                        "name": "login.do",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": [
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "username",
+                                        "value": "xx"
+                                    },
+                                    {
+                                        "enabled": true,
+                                        "type": "Text",
+                                        "name": "password",
+                                        "value": "123"
+                                    }
+                                ]
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"id\":\"a5\",\n  \"key\":\"sentby\",\n  \"val\":\"mexhao\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/updateprod"
+                        },
+                        "id": "b2d3c9be-826c-4200-af9a-f794024d1c2e",
+                        "name": "updateprod.do",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

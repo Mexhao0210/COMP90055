@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Test for functionality</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+   </head>
+
+   <body>
+      <div class="container">
+         <h1 class="text-center">
+            Product Stories
+         </h1>
+         <div id="productsRow" class="row">
+         </div>
+      </div>
+      <br></br>
+      <div>
+         <!-- <form class="form-inline" role="search" action="https://www.z01.com/Search/SearchList" method="get" target="_blank">  -->
+         <form class="bs-form" role="search" >
+            <div class="row">
+               <div class="col-lg-3">
+                  <h2 class="text-right">Search</h2>
+               </div>
+               <div class="col-lg-6">
+                  <div class="input-group">
+                     <input id="searchingItem" name="searchingItem" type="text" class="form-control" placeholder="input searching item" / >
+                     <span class="input-group-btn">
+                        <button class="searchingbtn" type="button" onclick="ProductSearching()">
+                           Go!
+                        </button>
+                     </span>
+                  </div>
+               </div>  
+               <div class="col-lg-3">
+               </div> 
+            </div>
+         </form>
+         <div id="Login" class="col-md-6 col-md-offset-3">
+            <a href="login.html" class="button">Login</a>
+         </div>
+         <div id="productCreate" class="col-md-6 col-md-offset-3">
+            <a href="create.html" class="button">CREATE</a>
+         </div>
+         <div id="productCreate" class="col-md-6 col-md-offset-3">
+            <a href="add.html" class="button">ADD</a>
+         </div>
+      </div>
+      <div id="productDisplay">
+         <div class="col-sm-6 col-md-4 col-lg-3">
+           <div class="panel panel-default panel-product">
+             <div class="panel-heading">
+               <p class="text-center" class="panel-title" >FirstProduct</p>
+             </div>
+             <div class="panel-body">
+               <img alt="140x140" data-src="images/boxer.jpeg"
+                class="img-rounded img-center" style="width: 100%;" src="images/boxer.jpeg" data-holder-rendered="true">
+               <br/><br/>
+               <span class="product-des">Thisistheproductdescription</span><br/>
+               <button class="btn btn-default btn-view" type="button" data-id="0">View</button>
+             </div>
+           </div>
+         </div>
+       </div>
+      
+ 
+      <!-- import all plugins -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <script src="http://malsup.github.com/jquery.form.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <script src="js/md5.min.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+      <!-- 包括所有已编译的插件 -->
+      <script src="js/bootstrap.min.js"></script>
+      <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/web3.min.js"></script>
+      <script src="js/truffle-contract.js"></script>
+
+      <script src="js/app.js"></script>
+   </body>
+</html>

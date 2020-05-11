@@ -8,10 +8,14 @@ const HOST = '0.0.0.0';
 
 // App
 const app = express();
+<<<<<<< Updated upstream
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
 app.get('/getprod', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
+=======
+app.get('/getprod', (req, x) => {
+>>>>>>> Stashed changes
     findMongo(req.query.id,res);
 });
 

@@ -1,0 +1,22 @@
+/*蒙版*/
+    .mask{
+    display:none;
+    width:100%;
+    position:absolute;
+    background:#fff;
+    z-index:10;
+    top:0;
+    left:0;
+    height:100%;
+    opacity:0.4;
+    }
+     
+    /*弹框*/
+    .bomb_box {
+    display:none;
+    background:#fff;
+    position:absolute;
+    top:320px;
+    left:500px;
+    z-index:20;
+    }
