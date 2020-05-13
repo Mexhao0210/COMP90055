@@ -5,21 +5,48 @@ contract Main{
 
     mapping(bytes => bytes[]) public productChain; //将UUID映射到md5数组
 
+    //创建新商品时调用，映射为一个空数组
+    function createProduct(bytes memory _UUID) public returns (bytes memory){
+        require(
+            keccak256(_UUID) != keccak256(""),
+            "Please enter a valid UUID."
+        );
+
+        bytes[] memory new_chain;
+        productChain[_UUID] = new_chain;
+
+        return "Product create successfully!";
+    }
+
     //传UUID和最新Block的md5值，更新产业链信息
-    function updateChain(bytes memory _UUID, bytes memory description) public{
+    function updateChain(bytes memory _UUID, bytes memory description) public returns (bytes memory){
+        require(
+            keccak256(_UUID) != keccak256(""),
+            "Please enter a valid UUID."
+        );
+
+        require(
+            keccak256(description) != keccak256(""),
+            "Please enter a valid description."
+        );
+
         bytes[] memory pre_chain = getChain(_UUID);
         bytes[] memory new_chain;
 
-        for (uint i = 0; i <= pre_chain.length; i++){
-            if(i <= pre_chain.length-1){
-                new_chain[i] = pre_chain[i];
-            } else{
-                new_chain[i] = description;
-
+        if (pre_chain.length == 0){
+            new_chain[0] = description;
+        } else{
+            for (uint i = 0; i <= pre_chain.length; i++){
+                if(i <= pre_chain.length-1){
+                    new_chain[i] = pre_chain[i];
+                } else{
+                    new_chain[i] = description;
+                }
             }
         }
 
         productChain[_UUID] = new_chain;
+        return "Product chain update successfully!";
     }
 
     //得到某个UUID对应商品的整体链信息
