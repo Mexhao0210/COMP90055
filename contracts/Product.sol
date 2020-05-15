@@ -3,39 +3,60 @@ pragma experimental ABIEncoderV2;
 
 contract Main{
 
-    mapping(bytes => bytes[]) public productChain; //将UUID映射到md5数组
+    //exist用于验证该键值对是否存在，存在时为真，不存在时为假
+    //isNull用于验证chain是否为空，刚被创建时为真，被add后为假
+    //String[]用于储存每一个供应链信息的md5
+    struct Product{
+        bool exist;
+        bool isNull;
+        string[] chain;
+    }
 
-    //创建新商品时调用，映射为一个空数组
-    function createProduct(bytes memory _UUID) public returns (bytes memory){
+    mapping(string => Product) public productChain; //将UUID映射到md5数组
+
+    //创建新商品时调用，映射为一个含有空数组的product结构体
+    function createProduct(string memory _UUID) public returns (string memory){
         require(
-            keccak256(_UUID) != keccak256(""),
+            keccak256(abi.encodePacked(_UUID)) != keccak256(abi.encodePacked("")),
             "Please enter a valid UUID."
         );
 
-        bytes[] memory new_chain;
-        productChain[_UUID] = new_chain;
+        string[] memory new_chain;
+        productChain[_UUID] = Product(true, true, new_chain);
 
         return "Product create successfully!";
     }
 
     //传UUID和最新Block的md5值，更新产业链信息
-    function updateChain(bytes memory _UUID, bytes memory description) public returns (bytes memory){
+    function updateChain(string memory _UUID, string memory description) public returns (string memory){
+        //检查UUID是否为空
         require(
-            keccak256(_UUID) != keccak256(""),
-            "Please enter a valid UUID."
+            keccak256(abi.encodePacked(_UUID)) != keccak256(abi.encodePacked("")),
+            "Please enter a UUID."
         );
 
+        //检查description是否为空
         require(
-            keccak256(description) != keccak256(""),
+            keccak256(abi.encodePacked(description)) != keccak256(abi.encodePacked("")),
             "Please enter a valid description."
         );
 
-        bytes[] memory pre_chain = getChain(_UUID);
-        bytes[] memory new_chain;
+        //检查mapping中是否有该Key
+        require(
+            productChain[_UUID].exist,
+            "Please enter a valid UUID."
+        );
 
-        if (pre_chain.length == 0){
+        //如果是刚被创建的商品，数组还是空的情况
+        if(productChain[_UUID].isNull){
+            productChain[_UUID].isNull = false;
+            string[] memory new_chain = new string[](1);
             new_chain[0] = description;
-        } else{
+            productChain[_UUID].chain = new_chain;
+        }else{
+            string[] memory pre_chain = getChain(_UUID);
+            string[] memory new_chain = new string[](pre_chain.length+1);
+
             for (uint i = 0; i <= pre_chain.length; i++){
                 if(i <= pre_chain.length-1){
                     new_chain[i] = pre_chain[i];
@@ -43,22 +64,59 @@ contract Main{
                     new_chain[i] = description;
                 }
             }
+
+            productChain[_UUID].chain = new_chain;
         }
 
-        productChain[_UUID] = new_chain;
         return "Product chain update successfully!";
     }
 
     //得到某个UUID对应商品的整体链信息
-    function getChain(bytes memory UUID) public view returns (bytes[] memory){
-        bytes[] memory chain = productChain[UUID];
-        return chain;
+    function getChain(string memory _UUID) public view returns (string[] memory){
+        //检查UUID是否为空
+        require(
+            keccak256(abi.encodePacked(_UUID)) != keccak256(abi.encodePacked("")),
+            "Please enter a UUID."
+        );
+
+        //检查mapping中是否有该Key
+        require(
+            productChain[_UUID].exist,
+            "Please enter a valid UUID."
+        );
+
+        //检查该商品产业链是否为空
+        require(
+            !productChain[_UUID].isNull,
+            "This product does not have any industry chain information."
+        );
+
+        string[] memory full_chain = productChain[_UUID].chain;
+        return full_chain;
     }
 
     //传UUID得最后一个块的md5校验
-    function getLastBlock(bytes memory UUID) public view returns (bytes memory){
-        bytes[] memory chain = productChain[UUID];
-        bytes memory lastBlock = chain[chain.length-1];
+    function getLastBlock(string memory _UUID) public view returns (string memory){
+        //检查UUID是否为空
+        require(
+            keccak256(abi.encodePacked(_UUID)) != keccak256(abi.encodePacked("")),
+            "Please enter a UUID."
+        );
+
+        //检查mapping中是否有该Key
+        require(
+            productChain[_UUID].exist,
+            "Please enter a valid UUID."
+        );
+
+        //检查该商品产业链是否为空
+        require(
+            !productChain[_UUID].isNull,
+            "This product does not have any industry chain information."
+        );
+
+        string[] memory full_chain = productChain[_UUID].chain;
+        string memory lastBlock = full_chain[full_chain.length-1];
         return lastBlock;
     }
 }
