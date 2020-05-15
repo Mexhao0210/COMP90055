@@ -12,13 +12,13 @@ contract Main{
         string[] chain;
     }
 
-    mapping(string => Product) public productChain; //将UUID映射到md5数组
+    mapping(string => Product) public productChain; //将UUID映射到商品结构体
 
     //创建新商品时调用，映射为一个含有空数组的product结构体
     function createProduct(string memory _UUID) public returns (string memory){
         require(
             keccak256(abi.encodePacked(_UUID)) != keccak256(abi.encodePacked("")),
-            "Please enter a valid UUID."
+            "Please enter a UUID."
         );
 
         string[] memory new_chain;
