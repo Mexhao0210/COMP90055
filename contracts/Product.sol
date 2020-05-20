@@ -2,7 +2,7 @@ pragma solidity ^0.6.4;
 pragma experimental ABIEncoderV2;
 
 contract Main{
-
+    
     //exist用于验证该键值对是否存在，存在时为真，不存在时为假
     //isNull用于验证chain是否为空，刚被创建时为真，被add后为假
     //String[]用于储存每一个供应链信息的md5
