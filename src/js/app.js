@@ -31,6 +31,8 @@ App = {
       });
       return App.bindViewEvents();
     },
+
+
   
     bindViewEvents: function() {
       // $(document).on('click', '.btn-view', App.handleAdopt);
@@ -93,19 +95,21 @@ App = {
       var keys = Object.keys(result);// from keys[2
                 console.log(keys);
                 $("#productDisplay").empty();
-                //window.location.href="search.html"; 
+                //window.location.href="search.html";
+                $("#product_load").empty();
+                var loaded = '<h4>Product information.</h4>';
+                $("#product_load").append(loaded);
                 $("#panel-body").empty();
                 var body = "";
                 for (i = 2, len = keys.length; i < len; i++) { 
                   var k = keys[i];
                   console.log(result[k]);
-                  body = '<strong>'+k+'</strong>: <span class="product-info">'+result[k]+'</span><br/>';
+                  body = '<strong class="emboss">'+k+'</strong>: <span class="search-info">'+result[k]+'</span><br/>';
                   $("#panel-body").append(body);
               }
     })
-   }
+     }
 
-   //待测试
   async function UpdateChecking(pid){
     return new Promise(function(resolve,reject){
       ProductInstance.deployed().then(function(instance){
@@ -126,7 +130,6 @@ App = {
   })
 }
    
-   //待测试
   async function ProductUpdate(){
    var pid = $("#pid").val();
    var field = document.getElementById("field").value;
@@ -188,45 +191,48 @@ App = {
       return
     }
     var product_id=uuid.v1();
-    ProductInstance.deployed().then(function(instance){
-      return instance.createProduct(product_id)}).then(function(result){
-        console.log(result);
-        if(result){
-          alert("Create successfully")
-        }
-      }).catch(function(error){
-        console.log(error.msg);
-      });
-      $.ajax({
-        type: "POST",//方法类型
-        dataType: "json",//预期服务器返回的数据类型
-        contentType:"application/json;charset=utf-8",
-        url: "http://34.66.139.55:8080/addprod" , //url
-        data: JSON.stringify({
-          data:{id:product_id, name:name, price:parseFloat(price)}}),
-        success: function (result) {
-          console.log(result);//打印服务端返回的数据(调试用)
-          if (result.status==0) {
-            console.log("Successful in DB");
-            getProduct(product_id).then(result=>{
-              // console.log(result);
-              ProductInstance.deployed().then(function(instance){
-                return instance.updateChain(product_id,md5(JSON.stringify(result)));
-              }).then(function(result){
-                console.log(result);
-                alert("First update successfully!")
-              }).catch(function(error){
-                console.log(error.msg);
-              })
-            })
-          } else{
-            console.log("Fail in DB")
-          };
+    $.ajax({
+      type: "POST",//方法类型
+      dataType: "json",//预期服务器返回的数据类型
+      contentType:"application/json;charset=utf-8",
+      url: "http://34.66.139.55:8080/addprod" , //url
+      data: JSON.stringify({
+        data:{id:product_id, name:name, price:parseFloat(price)}}),
+      success: function (result) {
+        console.log(result);//打印服务端返回的数据(调试用)
+        if (result.status==0) {
+          console.log("Successful in DB");
+          ProductInstance.deployed().then(function(instance){
+            return instance.createProduct(product_id)}).then(function(result){
+              console.log(result);
+              if(result){
+                alert("Create successfully");
+                getProduct(product_id).then(result=>{
+                  // console.log(result);
+                  ProductInstance.deployed().then(function(instance){
+                    return instance.updateChain(product_id,md5(JSON.stringify(result)));
+                  }).then(function(result){
+                    console.log(result);
+                    alert("First update successfully!")
+                  }).catch(function(error){
+                    console.log(error.msg);
+                  })
+                });
+              } else{
+                console.log("Fail in DB")
+              };  
+            }).catch(function(error){ //create 
+              console.log(error.msg);
+            });  
+          }
         },
-        error : function() {
-          alert("异常！");
-        }
-      })
+      error : function() {
+        alert("异常！");
+      }
+    })
+
+    
+      
   }
 
 
@@ -243,6 +249,9 @@ App = {
       alert("Enter valid username/password");
       return
     }
+    $('#loginTable').empty();
+                var info = '<div class="info-title">You can create or update your product now.</div>';
+                $('#loginTable').append(info);
     $.ajax({
     //几个参数需要注意一下
         type: "POST",//方法类型
@@ -256,6 +265,9 @@ App = {
             console.log(result);//打印服务端返回的数据(调试用)
             if (result.data) {
                 alert("SUCCESS");
+                $('#loginTable').empty();
+                var info = '<div class="info-title">You can create or update your product now.</div>';
+                $('#loginTable').append(info);
             } else{
               alert("FAIL");
             }
@@ -266,5 +278,6 @@ App = {
         }
     });
   }
+
 
 
