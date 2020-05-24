@@ -10,10 +10,9 @@ const HOST = '0.0.0.0';
 const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
-
     app.use('*',function (req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*'); //这个表示任意域名都可以访问，这样写不能携带cookie了。
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+        res.header('Access-Control-Allow-Origin', '*'); 
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
         res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');//设置方法
         if (req.method == 'OPTIONS') {
           res.send(200); // 意思是，在正常的请求之前，会发送一个验证，是否可以请求。
@@ -25,27 +24,32 @@ const app = express();
 
 
 app.get('/getprod', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Origin', '*');
     findMongo(req.query.id,res);
 });
 
+app.get('/getprodByOwner', (req, res) => {
+    // res.header('Access-Control-Allow-Origin', '*');
+    findProds(req.query.owner,res);
+});
+
 app.post('/addprod', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Origin', '*');
     result = insertMongo(req.body.data,res);
 });
 
 app.post('/updateprod', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Origin', '*');
     result = updateMongo(req.body.id, req.body.key, req.body.val,res);
 });
 
 app.post('/login', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Origin', '*');
     result = checkUser(req.body.username, req.body.password,res);
 });
 
 app.get('/register', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Origin', '*');
     result = register(req.query.username, req.query.password,res);
 });
 
@@ -119,6 +123,31 @@ function findMongo(key,res) {
   });
 }
 
+function findProds(owner,res) {
+    if(owner === undefined) {
+        res.send({status:1});
+    }
+    var MongoClient = require('mongodb').MongoClient;
+    var url = mongoUrl;
+    var result = ""
+ 
+    MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("prod");
+    var whereStr = {
+        owner : owner
+    };  // 查询条件
+    dbo.collection("site").find(whereStr).toArray(function(err, result) {
+        if (err) {
+            res.send({status:1});
+            throw err;
+        }
+        db.close();
+        res.send(result);
+    });
+  });
+}
+
 function checkUser(username, password, res) {
     if(username === undefined || password === undefined) {
         response.send({status:1});
@@ -138,7 +167,11 @@ function checkUser(username, password, res) {
         }
         db.close();
         console.log(result);
-        res.send({status:0, data:result});
+        if(result == undefined) {
+            res.send({status:1, data:null});
+        } else {
+            res.send({status:0, data:result});
+        }
     });
   });
 }
