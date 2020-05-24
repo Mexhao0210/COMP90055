@@ -1,0 +1,588 @@
+/* Quick Resets */
+*, *::before *::after{
+   box-sizing: border-box; 
+}
+img, video{
+    max-width: 100%;
+    height: auto;
+}
+html{
+    font-size: 14px;
+}
+/* Containers */
+.container{
+    padding: 1rem;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 300px;
+}
+.container-small{
+    width: 720px;
+    margin: 0 auto;}
+/* Typography - So Cool! *//* Icon fonts added from font awesome! */
+body{
+    color: #2d2d2d;
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: normal;
+    font-family: 'Raleway','Avenir', Arial;
+    line-height: 1;
+}
+
+h1, h2, h3{
+   
+    font-family: 'Playfair Display' ;
+}
+h1{
+    color: #2d2d2d;
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+}
+h2{
+    font-size: 2.5rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    text-align: center;
+
+}
+h3{
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+h3, a{
+    color: #e2574c;
+    text-decoration: none;
+}
+h4{
+    font-size: 1rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+
+p{
+    color: #2d2d2d;
+    line-height: 2;
+
+}
+
+.emboss{
+    font-style: normal;
+    font-weight: bold;
+    font-family: 'Playfair Display';
+}
+
+
+
+
+/* Site Header Design */
+
+.site-header{
+    position: sticky;
+    top: 0%;
+    z-index: 2;
+    background: #fffe;
+}
+.site-header-flex{
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between; 
+    position: sticky;
+    top: 0;
+    
+}
+
+.company-logo img{
+    max-width: 130px
+}
+
+.company-logo img:hover{
+    cursor: pointer;
+}
+.navigation-bar{
+    text-align: center;
+    flex: 100%;
+    padding-top: 1rem;
+    border-top: 1px solid #d7d7d7;
+    margin-top: 1rem;
+}
+
+.navigation-top li{
+    display: inline;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.navigation-top a{
+    text-decoration: none;
+}
+
+.navigation-top ul{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.navigation-top li:hover{
+    cursor: pointer;
+    text-shadow: #ffaa83;
+    background-color: #ffe4c0;
+    color: #b64036;
+    border: 0;
+    border-radius: 10px;
+    }
+
+
+/* Section 1 - Site Banner Design */
+
+.banner{
+    position: relative;
+    height: 400px;
+    background: 
+        linear-gradient(to bottom, rgba(0,0,0,0.21) 0%, rgba(0,0,0,0.21) 100%),
+        url("images/banner-girl.png") no-repeat center 35px, 
+        url("images/flower-bkgd.jpg") repeat-x center top;
+    background-size: cover,contain,cover;
+    display:flex ;
+    align-items: center;
+    justify-content: center;
+}
+.banner-label{
+    /* Text and Cell Alignment */
+    text-align: center;
+    position: absolute;
+    /* Text Size and Color */
+    font-size: 50%;
+    font-weight: 800;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.season-title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1;
+}
+.season {
+    font-size: 2.5rem;
+    font-weight: 400;
+    font-family: 'Playfair Display', Helvetica, sans-serif;
+    color: #fff;
+    line-height:1;
+}
+
+/* Section 2 - About Aloha Design*/
+
+.about-text{
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Section search - searching display */
+.search-text{
+    text-align: center;
+    padding: 2rem;
+}
+.search-loading{
+    font-size: 1rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.search-info{
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Section login - input box and button */
+/* For input text design */
+.login{
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%), url(images/wave-bkgd.jpg) no-repeat center bottom;
+    background-size: cover;
+    /* Cell Alignment */
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.login-form{
+    /* Cell Design */
+    position: relative;
+    width: 95%;
+    padding: 1rem 0;
+    margin: 0 auto;
+    justify-content: center;   
+}
+.table-style{
+    width:1100px;
+    height:262px;
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 15rem;
+}
+.inputBox{
+    position: relative;
+    width: 20%;
+    height: 40%;
+
+}
+#loginbtn{
+    /* Cell Design */
+    padding: 0.25rem 1.5rem;
+    border: 0px;
+    border-radius: 50px;
+    background-color: #e2574c;
+    /* Text Size and Color */
+    color: #ffffff;
+}
+#loginbtn:hover{
+    cursor: pointer;
+    color: #b64036;
+    background-color: #ffaa83;
+}
+.info-title{
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: rgb(79, 77, 77);
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 12rem;
+    line-height: 1;
+}
+
+/* section Create - Create form design */
+.create{
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%), url(images/wave-bkgd.jpg) no-repeat center bottom;
+    background-size: cover;
+    /* Cell Alignment */
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.create-form{
+    /* Cell Design */
+    position: relative;
+    width: 95%;
+    padding: 1rem 0;
+    margin: 0 auto;
+    justify-content: center;   
+}
+.create-table{
+    width:1100px;
+    height:262px;
+    text-align: right;
+    margin-right: 12rem;
+    margin-top: 10rem;
+    margin-bottom: 15rem;
+}
+.create-inputBox{
+    position: relative;
+    margin-right: 10rem;
+    margin-left: 1rem;
+    width:40%;
+    height: 40%;
+}
+#createbtn{
+    /* Cell Design */
+    padding: 0.25rem 1.5rem;
+    border: 0px;
+    border-radius: 50px;
+    background-color: #e2574c;
+    /* Text Size and Color */
+    color: #ffffff;
+}
+#createbtn:hover{
+    cursor: pointer;
+    color: #b64036;
+    background-color: #ffaa83;
+}
+.create-title{
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: rgb(79, 77, 77);
+    text-align: center;
+    margin-top: 5rem;
+    line-height: 1;
+}
+
+/* section update - update form */
+.update{
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%), url(images/wave-bkgd.jpg) no-repeat center bottom;
+    background-size: cover;
+    /* Cell Alignment */
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.update-form{
+    /* Cell Design */
+    position: relative;
+    width: 95%;
+    padding: 1rem 0;
+    margin: 0 auto;
+    justify-content: center;   
+}
+.update-table{
+    width:1100px;
+    height:262px;
+    text-align: right;
+    margin-right: 12rem;
+    margin-top: 10rem;
+    margin-bottom: 15rem;
+}
+.update-inputBox{
+    position: relative;
+    margin-right: 10rem;
+    margin-left: 1rem;
+    width:40%;
+    height: 40%;
+}
+#updatebtn{
+    /* Cell Design */
+    padding: 0.25rem 1.5rem;
+    border: 0px;
+    border-radius: 50px;
+    background-color: #e2574c;
+    /* Text Size and Color */
+    color: #ffffff;
+}
+#updatebtn:hover{
+    cursor: pointer;
+    color: #b64036;
+    background-color: #ffaa83;
+}
+.update-title{
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: rgb(79, 77, 77);
+    text-align: center;
+    margin-top: 5rem;
+    line-height: 1;
+}
+
+/* Section 4 - Featured Products Design */
+
+
+
+/* Section search - Search Form Design */
+
+.search-text p{
+    color: #fff; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}  
+.search-text h2{
+    color: #fff;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.search{
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%), url(images/flower-bkgd.jpg) no-repeat center bottom;
+    background-size: cover;
+    /* Cell Alignment */
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.search-content{
+    /* Cell Design */
+    margin: 0 auto;
+    padding: 2rem;
+    width:100%;
+    text-align: center;
+}
+.search-form{
+    /* Cell Design */
+    position: relative;
+    width: 95%;
+    padding: 1rem 0;
+    margin: 0 auto;
+    justify-content: center;   
+}
+input, button, textarea{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: normal;
+}
+.content-bar{
+    /* Cell Design */
+    padding: 0.2rem;
+    border: 0;
+    border-radius: 20px;
+    background-color: #fff;
+    /* Cell Alignment */
+    display: flex;
+    justify-content: space-between;  
+}
+#searchingItem{
+    /* Cell Design */
+    width: 60%;
+    padding: 0.5rem 2rem;
+    border: 0px;
+    border-radius: 20px;
+    opacity: 0.7;
+}
+#searchingbtn{
+    /* Cell Design */
+    padding: 0.25rem 1.5rem;
+    border: 0px;
+    border-radius: 50px;
+    background-color: #e2574c;
+    /* Text Size and Color */
+    color: #ffffff;
+}
+#searchingbtn:hover{
+    cursor: pointer;
+    color: #b64036;
+    background-color: #ffaa83;
+}
+
+/* Site Footer Design */
+
+.site-footer{
+    /* Cell Design */
+    background-color: #242424;
+}
+.site-footer a{
+    color: #fff;
+    text-decoration: none;
+}
+.site-footer-flex{
+    /* Cell Design */
+    padding: 3rem;
+    /* Cell Alignment */
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+.footer-text{
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    
+}
+.footer-text div p{
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+}
+.copyright p,
+    .address p{
+        line-height: 1.25;
+}
+.contact{
+    margin: 1rem 0;
+}
+.contact p{
+    display: inline;
+}
+
+div .address p{
+    color: #969696;
+}
+.social-media{
+    line-height: 2.25;
+    size: auto;
+    margin-top: 1rem;
+}
+.social-media-name{
+    display:none;
+}
+.social-media-list li{
+    display: inline-block;
+}
+i{
+    width: 2rem;
+}
+
+
+
+
+/* Mobile Design */
+@media screen and (max-width: 230px){
+    .cell {
+        width: 100%;
+        text-align: center;
+    }
+}
+@media screen and (min-width: 540px){
+    .cell {
+        width: 100%;
+        text-align: center;
+    }
+    .site-footer-flex{
+        flex-flow: row wrap;
+        justify-content: space-between;
+        padding: 3rem 3rem 3rem 0;
+    }
+    .social-media-list{
+        display: flex;
+        flex-flow: column wrap;
+    }
+    
+    .social-media-name{
+        display:inline-block;
+    }
+    .social-media{
+        margin-top: 0;
+        text-align: end;
+        
+    }
+    .footer-text{
+        margin-bottom: 0;
+        text-align: left;
+    }
+}
+
+/* Tablet Design */
+@media screen and (min-width: 600px){
+    html{
+        font-size: 16px;
+    }
+    .company-logo {
+        flex: 15%;
+    }
+    .navigation-bar{
+        flex: 60%;
+        order: 2;
+        border: 0;
+        padding-top: 0;
+        border-top: 0;
+        margin-top: 0;
+        align-self: center;
+    }
+    .shopping-cart{
+        order: 3;
+        justify-content: flex-end;
+        flex: 15%;
+    }
+    .cart-counter{
+        left: unset;
+    }
+
+    .season {
+        font-size: 3.2rem;
+    }
+    .cell {
+        width: 50%;
+      }
+    .site-footer-flex{
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+    
+}
+/* Full screen Design - Large */
+@media screen and (min-width: 1240px){
+    .cell {
+        width: 25%;
+      }
+}
+/* The End of this document */
+

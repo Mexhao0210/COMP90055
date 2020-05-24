@@ -1,62 +1,172 @@
 <!DOCTYPE html>
-<html>
-   <head>
-      <title>Product creation</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- 引入 Bootstrap -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
-   </head>
-   <body>
-    <br></br>
-    <div class="container">
-        <div class="col-md-6 col-md-offset-6" id="form-container">
-            <h1 class="text-center">
-                A New Product
-            </h1>
-            <form id="formCreate" class="form-inline" role="form">
-                <div class="form-group" style="padding-bottom: 8px;">
-                    <label class="col-md-6 text-center" for="name">
-                        Product Name
-                    </label>
-                    <div class="col-md-6">
-                        <input class="form-control" id="name" name="name" type="text"/>
-                    </div>
-                </div>
-                <div class="form-group" style="padding-bottom: 8px;">
-                    <label class="col-md-6 text-center" for="description">
-                       Product Description
-                    </label>
-                    <div class="col-md-6">
-                        <input class="form-control" id="description" name="description"  type="text"/>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-offset-6" style="margin-bottom: 8px">
-                    <input id="createbtn" type="button" value="CREATE" onclick="ProductCreate()" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aloha Apparel &trade; Co.</title>
+    <!-- WebPage design resources part from https://github.com/Drewson/Aloha-Apparel.git -->
+    
+    <!--Eric Meyer CSS Reset Link-->
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <!-- Flickity Slider - JavaScript Link -->
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <!--JQuery Reference Link-->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Data processing Reference Link in app.js-->
+    <script src="js/md5.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+    <!-- Smart Contract relative Reference Link -->
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <!-- backend logic -->
+    <script src="js/app.js"></script>
+    <!-- BootStrap Reference Link -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Typography/Icons-->
+    <link rel="stylesheet" href="fonts/stylesheet.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Flickty Slider - CSS Link -->
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <!--CSS Reference Link-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+</head>    
+</html>
+
+<!--Body - Visible Section-->
+<body>
+     <!--Site Header - Make Fixed-->
+     <header id="site-header" class="site-header container">
+        <!--Add logos in svg-->
+        <section class="site-header-flex">
+            <div class="company-logo">
+                <img src="images/aloha-logo.svg" alt="Aloha Apparel Co.">
+            </div>
+
+            <div class="navigation-bar">
+                <nav class="navigation-top">
+                    <ul>
+                        <li><a href="#search" name="Search">Search</a></li>
+                        <li ><a href="add.html" name="Update">Update</a></li>
+                        <li><a href="#product" name="Products">Products</a></li>
+                        <li><a href="#about" name="About">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </header>
+    <section id="create" class="create container">
+        <form id="createForm" >
+            <div class="create-title">Create a new product </div>
+            <table id="createTable" class="create-table">
+                <tr>
+                    <td> Product Name <input id="name" type="text" class="create-inputBox"></td> 
+                </tr>
+                <tr>
+                    <td> Product Price <input id="description" type="text" class="create-inputBox"></td> 
+                </tr>
+                <tr>
+                    <td><input type="button" id="createbtn" value="Create" onclick="ProductCreate()"/></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+    <section id="search" class="search container">
+        <div class="search-content">
+            <div class="search-text">
+                <h2>Searching product for <span class="emboss">Anytime</span></h2>
+                <p> Stay updated on the latest product history.</p>
+                <p> Create your own supply chain after login.</p>
+                <p> Transparent for all!</p>
+            </div>
+            <form id="search-form" class="search-form" >
+                <div class="content-bar">
+                    <input id="searchingItem" type="text" placeholder="Input product id">
+                    <input id="searchingbtn" type="button" value="Search" class="button" onclick="ProductSearching()">
                 </div>
             </form>
         </div>
-        <p id="status"></p>
-    <p>
-      <strong>Hint:</strong> open the browser developer console to view any
-      errors and warnings.
-    </p>
-    </div>
-   <!-- <script src="js/create.js"></script> -->
-      <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
-    
-      <script src="https://code.jquery.com/jquery.js"></script>
-      <script src="http://malsup.github.com/jquery.form.js"></script>
-      <script src="js/md5.min.js"></script>
-      <script src="http://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
-      <script src="https://unpkg.com/ethers@4.0.47/dist/ethers.min.js"></script>
+    </section>
+    <!--Section 2: Loading searching product info-->
+    <section id="product" class="highlights container">
+        <div id="product_load" class="search-loading">
+            Loading Products...
+        </div>    
+            <div id="panel-body" class="search-text" >
+                <strong class="emboss">Name</strong>: <span class="search-info">This is the product name</span><br/>
+                <br>
+                <strong class="emboss">Description</strong>: <span class="search-info">This is the product description</span><br/></div>
+            </div>
+    </section>
 
-      <!-- 包括所有已编译的插件 -->
-      <script src="js/bootstrap.min.js"></script>
-      <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script src="js/web3.min.js"></script>
-      <script src="js/truffle-contract.js"></script>
 
-      <script src="js/app.js"></script>
-   </body>
-</html>
+    <!--Site Footer-->
+    <footer id="site-footer" class="site-footer container">
+        <section class="site-footer-flex">
+            <div class="footer-text">
+                <div class="copyright">
+                    <p>&copy; 2020 Aloha Apparel&trade; Co.</p>
+                    <p>A simple demo for supply chain in fashion industry</p>
+                </div>
+                <div class="contact">
+                    <p>666-666-6666</p>
+                    <a href="mailto:info@alohaapparel.com" target="_blank" name="Email">
+                        info@alohaapparel.com
+                    </a>
+                </div>
+                <div class="address">
+                    <p>Unimelb 2020 <br /> Parville, Victoria</p>
+                </div>
+            </div>
+            <div class="social-media">
+                <ul class="social-media-list">
+                    <li>
+                        <a href="www.facebook.com">
+                            <i class="fab fa-facebook"></i>
+                            <span class="social-media-name">
+                                Facebook
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="www.twitter.com">
+                            <i class="fab fa-twitter"></i>
+                            <span class="social-media-name">
+                                Twitter
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="www.instagram.com">
+                            <i class="fab fa-instagram"></i>
+                            <span class="social-media-name">
+                                Instagram
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="www.pinterest.com">
+                            <i class="fab fa-pinterest"></i>
+                            <span class="social-media-name">
+                                Pinterest
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </footer>
+
+
+
+</body>
+
+
+
+
