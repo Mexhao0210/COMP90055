@@ -52,10 +52,10 @@
             <div class="navigation-bar">
                 <nav class="navigation-top">
                     <ul>
-                        <li><a href="#search" name="Search">Search</a></li>
-                        <li ><a href="create.html" name="Create">Create</a></li>
-                        <li><a href="#product" name="Products">Products</a></li>
-                        <li><a href="#about" name="About">About</a></li>
+                        <li id="li1"><a href="#search" name="Search">Home</a></li>
+                        <li id="li2"><a href="create.html" name="Create">Create</a></li>
+                        <li id="li3"><a href="#product" name="Products">Products</a></li>
+                        <li id="li4"><a href="#about" name="About">About</a></li>
                     </ul>
                 </nav>
             </div>
@@ -75,12 +75,12 @@
                     <td> Update information <input id="information" type="text" class="update-inputBox"></td>
                 </tr>
                 <tr>
-                    <td><input type="button" id="updatebtn" value="Update" onclick="ProductUpdate()"/></td>
+                    <td><div style="margin:0 auto;width:400px;"><input type="button" id="updatebtn" value="Update" onclick="ProductUpdate()"/></div></td>
                 </tr>
             </table>
         </form>
     </section>
-    <section id="search" class="search container">
+    <!-- <section id="search" class="search container">
         <div class="search-content">
             <div class="search-text">
                 <h2>Searching product for <span class="emboss">Anytime</span></h2>
@@ -95,9 +95,9 @@
                 </div>
             </form>
         </div>
-    </section>
+    </section> -->
     <!--Section 2: Loading searching product info-->
-    <section id="product" class="highlights container">
+    <!-- <section id="product" class="highlights container">
         <div id="product_load" class="search-loading">
             Loading Products...
         </div>    
@@ -106,7 +106,7 @@
                 <br>
                 <strong class="emboss">Description</strong>: <span class="search-info">This is the product description</span><br/></div>
             </div>
-    </section>
+    </section> -->
 
 
     <!--Site Footer-->

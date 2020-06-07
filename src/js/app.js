@@ -36,11 +36,25 @@ App = {
   
     bindViewEvents: function() {
       // $(document).on('click', '.btn-view', App.handleAdopt);
-      $('createbtn').click();
+      // $('createbtn').click();
       $('#loginbt').click(function() {
         $(".mask").show();
         $(".bomb_box").show();
       });
+      var role = getCookie("role");
+      if(role!== ""){
+        var user = getCookie("username");
+        $('#li1').html('<a onclick = "logout()"> Hello, '+user+'</a>');
+        if(role == "admin"){
+          $('#li2').html('<a href="index.html" name="Search">Home</a>');
+          $('#li3').html('<a href="create.html" name="Create">Create</a>');
+          $('#li4').html('<a href="add.html" name="Update">Update</a>');
+        } else {
+          $('#li2').html('<a href="index.html" name="Search">Search</a>');
+          $('#li3').html('<a href="#product" name="Products">Products</a>');
+        }
+      }
+      // alert(role);
     },
 
     viewProduct: function(){
@@ -104,9 +118,33 @@ App = {
                 for (i = 2, len = keys.length; i < len; i++) { 
                   var k = keys[i];
                   console.log(result[k]);
-                  body = '<strong class="emboss">'+k+'</strong>: <span class="search-info">'+result[k]+'</span><br/>';
-                  $("#panel-body").append(body);
+                  var currentRows = document.getElementById("panel-body").rows.length; 
+                  var insertTr = document.getElementById("panel-body").insertRow(currentRows);
+                  var insertTd = insertTr.insertCell(0);
+                  insertTd.style.textAlign="center";
+                  insertTd.style.border="solid 1px #add9c0";
+                  insertTd.innerHTML = '<strong class="emboss">'+k+'</strong>';
+                  insertTd = insertTr.insertCell(1);
+                  insertTd.style.textAlign="center";
+                  insertTd.style.border="solid 1px #add9c0";
+                  insertTd.innerHTML = '<span class="search-info">'+result[k]+'</span><br/>';
+                  // $("#panel-body").append(body);
               }
+              var currentRows = document.getElementById("panel-body").rows.length; 
+              var insertTr = document.getElementById("panel-body").insertRow(currentRows);
+              var insertTd = insertTr.insertCell(0);
+              insertTd.style.textAlign="center";
+              insertTd.style.border="solid 1px #add9c0";
+              insertTd.innerHTML = '<strong class="emboss">ORcode</strong>';
+              insertTd = insertTr.insertCell(1);
+              insertTd.style.textAlign="center";
+              insertTd.style.border="solid 1px #add9c0";
+              insertTd.innerHTML = '<div id="qrcode" style="width:100px; height:100px; margin:auto;"></div>';
+              var qrcode = new QRCode(document.getElementById("qrcode"), {
+                width : 100,
+                height : 100
+              });
+              qrcode.makeCode("http://34.66.139.55:8080/getprod?id="+searchval);
     })
      }
 
@@ -134,6 +172,8 @@ App = {
    var pid = $("#pid").val();
    var field = document.getElementById("field").value;
    var information = document.getElementById("information").value;
+   var user = getCookie("username");
+   field = "From " + user + " " + field;
    console.log(field);
    console.log(information);
    if(pid===""||field===""||information===""){
@@ -165,6 +205,7 @@ App = {
             }).then(function(result){
               console.log(result);
               alert("Update successfully!")
+              location="add.html"
             }).catch(function(error){
               console.log(error.msg);
             })
@@ -213,7 +254,8 @@ App = {
                     return instance.updateChain(product_id,md5(JSON.stringify(result)));
                   }).then(function(result){
                     console.log(result);
-                    alert("First update successfully!")
+                    alert("First update successfully!");
+                    location="create.html";
                   }).catch(function(error){
                     console.log(error.msg);
                   })
@@ -264,10 +306,13 @@ App = {
         success: function (result) {
             console.log(result);//打印服务端返回的数据(调试用)
             if (result.data) {
-                alert("SUCCESS");
-                $('#loginTable').empty();
-                var info = '<div class="info-title">You can create or update your product now.</div>';
-                $('#loginTable').append(info);
+                // alert("SUCCESS");
+                // $('#loginTable').empty();
+                // var info = '<div class="info-title">You can create or update your product now.</div>';
+                // $('#loginTable').append(info);
+                setCookie("role", result.data.role,600);
+                setCookie("username", result.data.username,600);
+                location="index.html"
             } else{
               alert("FAIL");
             }
@@ -279,5 +324,34 @@ App = {
     });
   }
 
+  function logout(){
+    setCookie("role","",1);
+    setCookie("username","",1);
+    $('#li1').html('<a href="login.html" name="Login">Login</a>');
+    location="index.html";
+  }
+
+  function setCookie(name, value, seconds) {
+    seconds = seconds || 0;   //seconds有值就直接赋值，没有为0
+    var expires = "";
+    if (seconds != 0) {      //设置cookie生存时间
+        var date = new Date();
+        date.setTime(date.getTime() + (seconds * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    document.cookie = name + "=" + escape(value) + expires + "; path=/";   //转码并赋值
+  }
+
+  function getCookie(name) {
+    var tep = document.cookie;
+    var cks = tep.split("; ");
+    for (var i=0;i<cks.length;i++){
+      if(cks[i].includes(name)){
+        var item = cks[i].split("=")
+        return item[1];
+      }
+    }
+    return "";
+  }
 
 

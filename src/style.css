@@ -69,6 +69,7 @@ p{
 }
 
 .emboss{
+    font-size:20px;
     font-style: normal;
     font-weight: bold;
     font-family: 'Playfair Display';
@@ -192,7 +193,7 @@ p{
     text-align: center;
 }
 .search-info{
-    font-size: 1rem;
+    font-size: 20px;
     margin-bottom: 1rem;
     text-align: center;
 }
@@ -292,6 +293,7 @@ p{
     border: 0px;
     border-radius: 50px;
     background-color: #e2574c;
+    margin: 0 auto;
     /* Text Size and Color */
     color: #ffffff;
 }
@@ -392,7 +394,7 @@ p{
     /* Cell Design */
     margin: 0 auto;
     padding: 2rem;
-    width:100%;
+    width:60%;
     text-align: center;
 }
 .search-form{
@@ -500,7 +502,6 @@ div .address p{
 i{
     width: 2rem;
 }
-
 
 
 
