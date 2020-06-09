@@ -10,12 +10,12 @@ html{
     font-size: 14px;
 }
 /* Containers */
-.container{
+/* .container{
     padding: 1rem;
     margin: 0 auto;
     max-width: 100%;
     min-width: 300px;
-}
+} */
 .container-small{
     width: 720px;
     margin: 0 auto;}
@@ -366,9 +366,6 @@ p{
     margin-top: 5rem;
     line-height: 1;
 }
-
-/* Section 4 - Featured Products Design */
-
 
 
 /* Section search - Search Form Design */

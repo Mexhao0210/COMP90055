@@ -41,6 +41,7 @@ App = {
         $(".mask").show();
         $(".bomb_box").show();
       });
+
       var role = getCookie("role");
       if(role!== ""){
         var user = getCookie("username");
@@ -52,13 +53,10 @@ App = {
         } else {
           $('#li2').html('<a href="index.html" name="Search">Search</a>');
           $('#li3').html('<a href="#product" name="Products">Products</a>');
+          getUserProducts(role);
         }
       }
       // alert(role);
-    },
-
-    viewProduct: function(){
-      //week10
     },
 
     handleLogin: function() {
@@ -80,6 +78,51 @@ App = {
                })
     }
   };
+
+  function testList(data){
+    $("#product").empty();
+    $("#instruction").empty();
+    $("#instruction").append("Your product information");
+    var list_body = $("#list_body");
+    $("#prodRow").empty();
+    var prodRow = $("#prodRow");
+    var prodBody = "";
+    if(data.length < 1 ){
+      data = [{"id":"100","id2":"123","name":"swoosh t-shirt","price":"99.00","trackID":"1010304892"},{"id":"100","id2":"123","name":"nintendo switch","price":"469.00","style":"Grey-2019"},{"id":"100","id2":"123","name":"Nike AirForce1","price":"299.00","color":"white","location":"Melbourne"}];
+    }
+    for (j = 0; j < data.length; j ++) {
+      //for each product 
+      var result = data[j];
+      var keys = Object.keys(result);
+      list_body.empty();
+      for (i = 2, len = keys.length; i < len; i++) { 
+        var k = keys[i];
+        prodBody = '<strong class="emboss">'+k+'</strong>: <span class="search-info">'+result[k]+'</span><br/>';
+        list_body.append(prodBody);
+      }
+      prodRow.append('<div class="col-sm-4">'+list_body.html()+'</div>');
+    }
+    $("#list_body").empty();
+  }
+
+  function getUserProducts(role){
+    console.log(role);
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "http://34.66.139.55:8080/getprodByOwner" ,//url
+      data: {owner:role},
+      success: function (data) {      
+        //return json string
+        console.log(data);
+        testList(data);
+      },
+      error : function() {
+          console.error("No products for this user.")
+      }
+    });
+  }
+
 
   //return a promise object
   function getProduct(param){
@@ -128,7 +171,6 @@ App = {
                   insertTd.style.textAlign="center";
                   insertTd.style.border="solid 1px #add9c0";
                   insertTd.innerHTML = '<span class="search-info">'+result[k]+'</span><br/>';
-                  // $("#panel-body").append(body);
               }
               var currentRows = document.getElementById("panel-body").rows.length; 
               var insertTr = document.getElementById("panel-body").insertRow(currentRows);

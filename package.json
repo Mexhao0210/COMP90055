@@ -21,6 +21,6 @@
   "dependencies": {
     "lite-server": "^2.5.4",
     "uuid": "^8.0.0",
-    "web3": "^1.2.7"
+    "web3": "^1.2.8"
   }
 }
