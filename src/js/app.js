@@ -80,7 +80,7 @@ App = {
   };
 
   function testList(data){
-    $("#product").empty();
+    //$("#productlist").empty();
     $("#instruction").empty();
     $("#instruction").append("Your product information");
     var list_body = $("#list_body");
@@ -142,12 +142,14 @@ App = {
     })
   }
 
-  function ProductSearching(){   
+  async function ProductSearching(){   
     var searchval = $("#searchingItem").val();
     if(searchval==="" ) {
       alert("Enter valid product id!");
       return
     }
+    const isSame = await UpdateChecking(searchval);
+    if(isSame){
     getProduct(searchval).then(result=>{
       var keys = Object.keys(result);// from keys[2
                 console.log(keys);
@@ -177,7 +179,7 @@ App = {
               var insertTd = insertTr.insertCell(0);
               insertTd.style.textAlign="center";
               insertTd.style.border="solid 1px #add9c0";
-              insertTd.innerHTML = '<strong class="emboss">ORcode</strong>';
+              insertTd.innerHTML = '<strong class="emboss">QRcode</strong>';
               insertTd = insertTr.insertCell(1);
               insertTd.style.textAlign="center";
               insertTd.style.border="solid 1px #add9c0";
@@ -187,8 +189,11 @@ App = {
                 height : 100
               });
               qrcode.makeCode("http://34.66.139.55:8080/getprod?id="+searchval);
-    })
-     }
+        })
+    }else{
+      alert("Data is modified!");
+    }
+  }
 
   async function UpdateChecking(pid){
     return new Promise(function(resolve,reject){
@@ -211,114 +216,126 @@ App = {
 }
    
   async function ProductUpdate(){
-   var pid = $("#pid").val();
-   var field = document.getElementById("field").value;
-   var information = document.getElementById("information").value;
-   var user = getCookie("username");
-   field = "From " + user + " " + field;
-   console.log(field);
-   console.log(information);
-   if(pid===""||field===""||information===""){
-     alert("Empty parameters!");
-     return
-   }
-  //  update_ = {"id":pid,"key":field,"val":information};
-  //  updateJson = JSON.stringify(update_);
-  //  console.log(updateJson);
-
-   //Integrity checking before updating
-   const result = await UpdateChecking(pid);
-   if(result){
-     console.log("成功")
-     $.ajax({
-      type: "POST",//方法类型
-      dataType: "json",//预期服务器返回的数据类型
-      //contentType:"application/json",
-      url: "http://34.66.139.55:8080/updateprod" , //url
-      data: {id:pid,key:field,val:information},
-      success: function (result) {
-        console.log(result);//打印服务端返回的数据(调试用)
-        if (result.status===0) {
-          console.log("Successful update, status: "+result.status);
-          getProduct(pid).then(result=>{
-            console.log(result);
-            ProductInstance.deployed().then(function(instance){
-              return instance.updateChain(pid,md5(JSON.stringify(result)));
-            }).then(function(result){
-              console.log(result);
-              alert("Update successfully!")
-              location="add.html"
-            }).catch(function(error){
-              console.log(error.msg);
-            })
-          })
-        } else{
-          alert("Update failed in DB")};
-      },
-      error : function() {
-        alert("异常！");
+    var role = getCookie("role");
+    if(role == "admin"){
+      var pid = $("#pid").val();
+      var field = document.getElementById("field").value;
+      var information = document.getElementById("information").value;
+      var user = getCookie("username");
+      field = "From " + user + ": " + field;
+      console.log(field);
+      console.log(information);
+      if(pid===""||field===""||information===""){
+        alert("Empty parameters!");
+        return
       }
-    })
-   }else{
-     console.log("失败")
-   }
+      //Integrity checking before updating
+      const result = await UpdateChecking(pid);
+      if(result){
+        console.log("成功")
+        $.ajax({
+          type: "POST",//方法类型
+          dataType: "json",//预期服务器返回的数据类型
+          //contentType:"application/json",
+          url: "http://34.66.139.55:8080/updateprod" , //url
+          data: {id:pid,key:field,val:information},
+          success: function (result) {
+            console.log(result);//打印服务端返回的数据(调试用)
+            if (result.status===0) {
+              console.log("Successful update, status: "+result.status);
+              getProduct(pid).then(result=>{
+                console.log(result);
+                ProductInstance.deployed().then(function(instance){
+                  return instance.updateChain(pid,md5(JSON.stringify(result)));
+                }).then(function(result){
+                  console.log(result);
+                  alert("Update successfully!")
+                  location="add.html"
+                }).catch(function(error){
+                  console.log(error.msg);
+                })
+              })
+            } else{
+              alert("Update failed in DB")};
+          },
+          error : function() {
+            alert("异常！");
+          }
+        })
+      }else{
+        console.log("Data is modified!");
+      }
+      }else{
+        alert("Only admin can update products.");
+      }
 
   }
 
   function ProductCreate(){
-    var name = $("#name").val();
-    var price = $("#description").val();
-    //alert(name);
-    if(name==="" || description==="") {
-      alert("Empty parameters!");
-      return
-    }
-    var product_id=uuid.v1();
-    $.ajax({
-      type: "POST",//方法类型
-      dataType: "json",//预期服务器返回的数据类型
-      contentType:"application/json;charset=utf-8",
-      url: "http://34.66.139.55:8080/addprod" , //url
-      data: JSON.stringify({
-        data:{id:product_id, name:name, price:parseFloat(price)}}),
-      success: function (result) {
-        console.log(result);//打印服务端返回的数据(调试用)
-        if (result.status==0) {
-          console.log("Successful in DB");
-          ProductInstance.deployed().then(function(instance){
-            return instance.createProduct(product_id)}).then(function(result){
-              console.log(result);
-              if(result){
-                alert("Create successfully");
-                getProduct(product_id).then(result=>{
-                  // console.log(result);
-                  ProductInstance.deployed().then(function(instance){
-                    return instance.updateChain(product_id,md5(JSON.stringify(result)));
-                  }).then(function(result){
-                    console.log(result);
-                    alert("First update successfully!");
-                    location="create.html";
-                  }).catch(function(error){
-                    console.log(error.msg);
-                  })
-                });
-              } else{
-                console.log("Fail in DB")
-              };  
-            }).catch(function(error){ //create 
-              console.log(error.msg);
-            });  
-          }
-        },
-      error : function() {
-        alert("异常！");
+    var role = getCookie("role");
+    if(role == "admin"){
+      var name = $("#name").val();
+      var price = $("#description").val();
+      //alert(name);
+      if(name==="" || description==="") {
+        alert("Empty parameters!");
+        return
       }
-    })
-
-    
-      
+      var product_id=uuid.v1();
+      $.ajax({
+        type: "POST",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        contentType:"application/json;charset=utf-8",
+        url: "http://34.66.139.55:8080/addprod" , //url
+        data: JSON.stringify({
+          data:{id:product_id, name:name, price:parseFloat(price)}}),
+        success: function (result) {
+          console.log(result);//打印服务端返回的数据(调试用)
+          if (result.status==0) {
+            console.log("Successful in DB");
+            ProductInstance.deployed().then(function(instance){
+              return instance.createProduct(product_id)}).then(function(result){
+                console.log(result);
+                if(result){
+                  alert("Create successfully");
+                  getProduct(product_id).then(result=>{
+                    // console.log(result);
+                    ProductInstance.deployed().then(function(instance){
+                      return instance.updateChain(product_id,md5(JSON.stringify(result)));
+                    }).then(function(result){
+                      console.log(result);
+                      alert("First update successfully!");
+                      //location="create.html";
+                      displayQRcode(product_id);
+                    }).catch(function(error){
+                      console.log(error.msg);
+                    })
+                  });
+                } else{
+                  console.log("Fail in DB")
+                };  
+              }).catch(function(error){ //create 
+                console.log(error.msg);
+              });  
+            }
+          },
+        error : function() {
+          alert("异常！");
+        }
+      })
+    }else{
+      alert("Only admin can create products.");
+    }
   }
 
+  function displayQRcode(pid){
+    //create disappear
+    //show pid
+    $("#createTable").empty();
+    var createTable = $("#createTable");
+    var body1 = '<tr ><td><strong class="emboss">product id</strong><span class="create-inputBox">'+pid+'</span></td></tr>';
+    createTable.append(body1);
+  }
 
   $(function() {
     $(window).load(function() {
